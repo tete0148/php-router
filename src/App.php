@@ -9,7 +9,7 @@ class App implements \ArrayAccess {
 
     public function __construct()
     {
-        $this->router = new Router();
+        $this->router = new Router($this);
     }
 
     public function run() : void

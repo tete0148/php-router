@@ -4,10 +4,16 @@ namespace tete0148\PHPRouter;
 
 class Router {
 
+    private $app;
     /**
      * @var array[Route]
      */
     private $routes = [];
+
+    public function __construct(App $app)
+    {
+        $this->app = $app;
+    }
 
     /**
      * @param $method string
@@ -49,7 +55,7 @@ class Router {
                 if(!is_callable($callback)) {
                     $callback = explode('@', $callback);
                     $callback = array_pad($callback, 2, 'index');
-                    $callback[0] = new $callback[0];
+                    $callback[0] = new $callback[0]($this->app);
                 }
 
                 call_user_func_array($callback, $parameters);

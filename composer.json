@@ -2,6 +2,7 @@
     "name": "tete0148/php-router",
     "description": "A simple PHP router",
     "type": "library",
+    "minimum-stability": "stable",
     "authors": [
         {
             "name": "Theo CHAMPION",

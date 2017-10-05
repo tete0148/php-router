@@ -1,0 +1,17 @@
+{
+    "name": "tete0148/php-router",
+    "description": "A simple PHP router",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Theo CHAMPION",
+            "email": "theoc.01@live.fr"
+        }
+    ],
+    "require": {},
+    "autoload": {
+      "psr-4": {
+        "tete0148\\PHPRouter\\": "src/"
+      }
+    }
+}

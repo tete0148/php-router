@@ -43,9 +43,11 @@ class Router {
             /** @var Route $route */
             if($route->getName() === $route_name) {
                 $route_params = $route->getParameters();
+
+                $url = $route->getUrl();
                 foreach($route_params as $route_param => $required)
                     $url = preg_replace('/\{' . $route_param . '\??\}/',
-                        $params[$route_param] ?? null, $route->getUrl());
+                        $params[$route_param] ?? null, $url);
 
             }
         return ($this->app->getBaseUrl() ?? '') . rtrim($url,'/');

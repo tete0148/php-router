@@ -6,6 +6,7 @@ class App implements \ArrayAccess {
 
     private $router = null;
     private $container = [];
+    private $baseUrl = null;
 
     public function __construct()
     {
@@ -37,6 +38,24 @@ class App implements \ArrayAccess {
     public function delete($url, $callback) : Route
     {
         return $this->router->addRoute('DELETE', $url, $callback);
+    }
+
+    /**
+     * @return Router
+     */
+    public function getRouter() : Router
+    {
+        return $this->router;
+    }
+
+    public function setBaseUrl($url)
+    {
+        $this->baseUrl = $url;
+    }
+
+    public function getBaseUrl()
+    {
+        return $this->baseUrl;
     }
 
     /**

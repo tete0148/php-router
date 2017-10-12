@@ -11,6 +11,7 @@ class Route {
 	private $parameters = [];
 	private $rules = [];
 	private $callback;
+    private $regex = '';
 
     /**
      * Route constructor.
@@ -67,15 +68,14 @@ class Route {
             if(!isset($this->rules[$parameter]))
                 $this->rules[$parameter] = '[A-Za-z0-9-_]+';
 
-        $url = '@^' . $url . '$@';
-
+        $this->regex = '@^' . $url . '$@';
         $this->url = $url;
     }
 
     /**
      * @return string
      */
-    private function getName()
+    public function getName()
     {
         return $this->name;
     }
@@ -130,5 +130,10 @@ class Route {
     public function setCallback($callback)
     {
         $this->callback = $callback;
+    }
+
+    public function getRegex()
+    {
+        return $this->regex;
     }
 }

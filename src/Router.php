@@ -30,6 +30,27 @@ class Router {
         return $route;
     }
 
+    /**
+     * Returns the http path for the given route
+     *
+     * @param string $route_name
+     * @param array $params
+     */
+    public function pathFor(string $route_name, $params = [])
+    {
+        $url = null;
+        foreach($this->routes as $route)
+            /** @var Route $route */
+            if($route->getName() === $route_name) {
+                $route_params = $route->getParameters();
+                foreach($route_params as $route_param => $required)
+                    $url = preg_replace('/\{' . $route_param . '\??\}/',
+                        $params[$route_param] ?? null, $route->getUrl());
+
+            }
+        return ($this->app->getBaseUrl() ?? '') . rtrim($url,'/');
+    }
+
     public function handle($url)
     {
         $method = strtoupper($_SERVER['REQUEST_METHOD']);
@@ -40,20 +61,20 @@ class Router {
             if($route->getMethod() !== $method)
                 continue;
 
-            $route_url = $route->getUrl();
+            $route_regex = $route->getRegex();
 
             foreach ($route->getRules() as $parameter => $rule) {
                 $required = $route->getParameters()[$parameter] ? '?' : '';
-                $route_url =
+                $route_regex =
                     str_replace(
                         '{' . $parameter . $required . '}',
                         $required . '(' . $rule . ')' . $required,
-                        $route_url
+                        $route_regex
                     );
             }
 
             $matches = [];
-            if($route_url === $url || preg_match($route_url, $url, $matches)) {
+            if($route_regex === $url || preg_match($route_regex, $url, $matches)) {
                 unset($matches[0]);
                 $matches = array_pad($matches, count($route->getParameters()), null);
                 $parameters = array_combine($route->getParameters(), $matches);

@@ -32,8 +32,14 @@ class Router {
 
     public function handle($url)
     {
+        $method = strtoupper($_SERVER['REQUEST_METHOD']);
+
         foreach($this->routes as $route) {
             /** @var Route $route */
+
+            if($route->getMethod() !== $method)
+                continue;
+
             $route_url = $route->getUrl();
 
             foreach ($route->getRules() as $parameter => $rule) {

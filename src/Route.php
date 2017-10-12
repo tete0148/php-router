@@ -22,7 +22,7 @@ class Route {
         if(!in_array($method,$this->allowed_methods))
             throw new \InvalidArgumentException('Invalid HTTP method: ' . $method);
 
-        $this->setMethod($method);
+        $this->setMethod(strtoupper($method));
         $this->setUrl($url);
         $this->setCallback($callback);
     }
@@ -30,7 +30,7 @@ class Route {
     /**
      * @return string
      */
-    private function getMethod()
+    public function getMethod()
     {
         return $this->method;
     }
@@ -40,7 +40,7 @@ class Route {
      */
     private function setMethod($method)
     {
-        $this->method = $method;
+        $this->method = strtoupper($method);
     }
 
     /**

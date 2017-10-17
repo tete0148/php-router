@@ -88,6 +88,7 @@ class Router {
                 }
 
                 call_user_func_array($callback, $parameters);
+                break;
             }
             else
                 continue;
